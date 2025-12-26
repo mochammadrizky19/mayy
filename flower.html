@@ -1,324 +1,696 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="images/gift.png" type="image/x-icon">
-  <link rel="stylesheet" href="css/style.css">
+  <title>MERRY CHRISTMAS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <!-- Document Title -->
-  <title>FLOWERS</title>
+    body {
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      background: #000;
+    }
+
+    /* Background Malam dengan Bintang */
+    .night {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      z-index: -1;
+    }
+
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Animasi Salju */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      z-index: 5;
+      text-shadow: 0 0 5px rgba(255,255,255,0.5);
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    /* Container Pohon Natal */
+    .christmas-tree {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: treeGrow 2s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes treeGrow {
+      from {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Segitiga Pohon */
+    .tree-section {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .tree-section--1 {
+      border-width: 0 80px 100px 80px;
+      border-color: transparent transparent #2d5016 transparent;
+      filter: drop-shadow(0 0 20px rgba(45, 80, 22, 0.6));
+    }
+
+    .tree-section--2 {
+      border-width: 0 100px 120px 100px;
+      border-color: transparent transparent #3a6b1f transparent;
+      margin-top: -30px;
+      filter: drop-shadow(0 0 20px rgba(58, 107, 31, 0.6));
+    }
+
+    .tree-section--3 {
+      border-width: 0 120px 140px 120px;
+      border-color: transparent transparent #4a8028 transparent;
+      margin-top: -30px;
+      filter: drop-shadow(0 0 20px rgba(74, 128, 40, 0.6));
+    }
+
+    /* Batang Pohon */
+    .tree-trunk {
+      width: 40px;
+      height: 60px;
+      background: linear-gradient(to right, #4a3728, #6b5444);
+      margin: 0 auto;
+      border-radius: 0 0 5px 5px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    /* Bintang di Puncak */
+    .tree-star {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      animation: starRotate 4s linear infinite, starGlow 2s ease-in-out infinite;
+    }
+
+    .tree-star::before,
+    .tree-star::after {
+      content: '⭐';
+      position: absolute;
+      font-size: 50px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 0 20px #ffd700);
+    }
+
+    @keyframes starRotate {
+      from { transform: translateX(-50%) rotate(0deg); }
+      to { transform: translateX(-50%) rotate(360deg); }
+    }
+
+    @keyframes starGlow {
+      0%, 100% { filter: drop-shadow(0 0 20px #ffd700); }
+      50% { filter: drop-shadow(0 0 40px #ffed4e); }
+    }
+
+    /* Ornamen pada Pohon */
+    .ornament {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      animation: ornamentGlow 2s ease-in-out infinite;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .ornament::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 4px;
+      background: #888;
+    }
+
+    .ornament--red { 
+      background: radial-gradient(circle at 30% 30%, #ff6b6b, #c41e3a);
+      top: 50px;
+      left: 30%;
+      animation-delay: 0s;
+    }
+    .ornament--gold { 
+      background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
+      top: 80px;
+      right: 25%;
+      animation-delay: 0.3s;
+    }
+    .ornament--blue { 
+      background: radial-gradient(circle at 30% 30%, #4FC3F7, #1565C0);
+      top: 120px;
+      left: 20%;
+      animation-delay: 0.6s;
+    }
+    .ornament--green { 
+      background: radial-gradient(circle at 30% 30%, #81C784, #2e7d32);
+      top: 110px;
+      right: 20%;
+      animation-delay: 0.9s;
+    }
+    .ornament--pink { 
+      background: radial-gradient(circle at 30% 30%, #F48FB1, #C2185B);
+      top: 150px;
+      left: 25%;
+      animation-delay: 1.2s;
+    }
+    .ornament--purple { 
+      background: radial-gradient(circle at 30% 30%, #BA68C8, #6A1B9A);
+      top: 160px;
+      right: 30%;
+      animation-delay: 1.5s;
+    }
+    .ornament--yellow { 
+      background: radial-gradient(circle at 30% 30%, #FFF176, #F57F17);
+      top: 190px;
+      left: 15%;
+      animation-delay: 1.8s;
+    }
+    .ornament--orange { 
+      background: radial-gradient(circle at 30% 30%, #FFB74D, #E65100);
+      top: 200px;
+      right: 18%;
+      animation-delay: 2.1s;
+    }
+
+    @keyframes ornamentGlow {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 10px currentColor;
+      }
+      50% { 
+        transform: scale(1.2);
+        box-shadow: 0 0 20px currentColor;
+      }
+    }
+
+    /* Lampu Hias */
+    .tree-lights {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .light {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: lightBlink 1.5s ease-in-out infinite;
+    }
+
+    .light--1 { background: #ff0000; top: 40px; left: 45%; animation-delay: 0s; }
+    .light--2 { background: #00ff00; top: 70px; left: 55%; animation-delay: 0.2s; }
+    .light--3 { background: #0000ff; top: 100px; left: 35%; animation-delay: 0.4s; }
+    .light--4 { background: #ffff00; top: 130px; left: 65%; animation-delay: 0.6s; }
+    .light--5 { background: #ff00ff; top: 160px; left: 40%; animation-delay: 0.8s; }
+    .light--6 { background: #00ffff; top: 180px; left: 60%; animation-delay: 1s; }
+    .light--7 { background: #ff8800; top: 60px; left: 70%; animation-delay: 1.2s; }
+    .light--8 { background: #88ff00; top: 140px; left: 30%; animation-delay: 1.4s; }
+
+    @keyframes lightBlink {
+      0%, 100% { opacity: 0.3; box-shadow: 0 0 5px currentColor; }
+      50% { opacity: 1; box-shadow: 0 0 20px currentColor; }
+    }
+
+    /* Hadiah di Bawah Pohon */
+    .gifts {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 1;
+      animation: giftsAppear 2s ease-out 1s forwards;
+      opacity: 0;
+    }
+
+    @keyframes giftsAppear {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .gift {
+      width: 50px;
+      height: 50px;
+      position: relative;
+      animation: giftShake 3s ease-in-out infinite;
+    }
+
+    .gift--1 { animation-delay: 0s; }
+    .gift--2 { animation-delay: 0.5s; }
+    .gift--3 { animation-delay: 1s; }
+
+    @keyframes giftShake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-2deg); }
+      75% { transform: rotate(2deg); }
+    }
+
+    .gift__box {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .gift--1 .gift__box { background: linear-gradient(135deg, #ff6b6b, #c41e3a); }
+    .gift--2 .gift__box { background: linear-gradient(135deg, #4FC3F7, #1565C0); }
+    .gift--3 .gift__box { background: linear-gradient(135deg, #81C784, #2e7d32); }
+
+    .gift__ribbon-v {
+      position: absolute;
+      width: 10px;
+      height: 100%;
+      background: #ffd700;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .gift__ribbon-h {
+      position: absolute;
+      width: 100%;
+      height: 10px;
+      background: #ffd700;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .gift__bow {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+      filter: drop-shadow(0 0 5px #ffd700);
+    }
+
+    /* Lantai Salju */
+    .snow-ground {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(to top, #e6f2ff, #ffffff);
+      z-index: 0;
+      animation: groundAppear 2s ease-out forwards;
+      box-shadow: 0 -5px 20px rgba(255,255,255,0.3);
+    }
+
+    @keyframes groundAppear {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+
+    /* Judul */
+    .title {
+      position: fixed;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 5rem;
+      color: white;
+      text-align: center;
+      text-shadow: 
+        0 0 10px #c41e3a,
+        0 0 20px #c41e3a,
+        0 0 40px #ff6b6b,
+        0 0 60px #ff6b6b,
+        3px 3px 6px rgba(0,0,0,0.8);
+      animation: titleAppear 1s ease-out 2.5s forwards, titleFloat 4s ease-in-out infinite 3.5s;
+      opacity: 0;
+      z-index: 10;
+      font-weight: bold;
+      letter-spacing: 5px;
+    }
+
+    @keyframes titleAppear {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5) rotateY(90deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) rotateY(0deg);
+      }
+    }
+
+    @keyframes titleFloat {
+      0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+      50% { transform: translateX(-50%) translateY(-15px) scale(1.05); }
+    }
+
+    .subtitle {
+      position: fixed;
+      top: 28%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.8rem;
+      color: #ffd700;
+      text-align: center;
+      text-shadow: 
+        0 0 10px #ffd700,
+        0 0 20px #ff8c00,
+        2px 2px 4px rgba(0,0,0,0.5);
+      animation: subtitleAppear 1s ease-out 3s forwards;
+      opacity: 0;
+      z-index: 10;
+      font-style: italic;
+    }
+
+    @keyframes subtitleAppear {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    /* Ornamen Terbang */
+    .floating-ornament {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      z-index: 1;
+      box-shadow: 0 0 20px currentColor;
+    }
+
+    .floating-ornament--1 { 
+      background: radial-gradient(circle at 30% 30%, #ff6b6b, #c41e3a);
+      top: 35%; 
+      left: 10%; 
+      animation-delay: 0s;
+    }
+    .floating-ornament--2 { 
+      background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
+      top: 45%; 
+      right: 12%; 
+      animation-delay: 1s;
+    }
+    .floating-ornament--3 { 
+      background: radial-gradient(circle at 30% 30%, #4FC3F7, #1565C0);
+      top: 60%; 
+      left: 8%; 
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0) rotate(0deg);
+        box-shadow: 0 0 20px currentColor;
+      }
+      50% { 
+        transform: translateY(-30px) rotate(180deg);
+        box-shadow: 0 0 40px currentColor;
+      }
+    }
+
+    /* Tombol Audio */
+    @media (max-width: 768px) {
+      .title { 
+        font-size: 2rem; 
+        letter-spacing: 2px;
+        top: 10%;
+        width: 90%;
+      }
+      .subtitle { 
+        font-size: 1rem;
+        top: 20%;
+        width: 90%;
+      }
+      
+      .christmas-tree { 
+        transform: translateX(-50%) scale(0.5);
+        bottom: 120px;
+      }
+      
+      .tree-star {
+        width: 35px;
+        height: 35px;
+        top: -45px;
+      }
+      .tree-star::before,
+      .tree-star::after {
+        font-size: 35px;
+      }
+      
+      .ornament {
+        width: 10px;
+        height: 10px;
+      }
+      
+      .light {
+        width: 5px;
+        height: 5px;
+      }
+      
+      .gifts {
+        bottom: 120px;
+        gap: 10px;
+        transform: translateX(-50%) scale(0.7);
+      }
+      
+      .gift {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .floating-ornament { 
+        width: 20px; 
+        height: 20px; 
+      }
+      
+      .snow-ground {
+        height: 100px;
+      }
+      
+      .snowflake {
+        font-size: 0.8em;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .title { 
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+      }
+      .subtitle { 
+        font-size: 0.85rem;
+      }
+      
+      .christmas-tree { 
+        transform: translateX(-50%) scale(0.4);
+        bottom: 130px;
+      }
+      
+      .gifts {
+        bottom: 130px;
+        transform: translateX(-50%) scale(0.6);
+      }
+      
+      .floating-ornament {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  </style>
 </head>
-
-<body class="not-loaded">
-  <!-- Background -->
+<body>
   <div class="night"></div>
+  <div class="stars"></div>
+  <div class="snow-ground"></div>
 
-  <!-- Flower -->
-  <div class="flowers">
-    <div class="flower flower--1">
-      <div class="flower__leafs flower__leafs--1">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
-
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
-
-      </div>
-      <div class="flower__line">
-        <div class="flower__line__leaf flower__line__leaf--1"></div>
-        <div class="flower__line__leaf flower__line__leaf--2"></div>
-        <div class="flower__line__leaf flower__line__leaf--3"></div>
-        <div class="flower__line__leaf flower__line__leaf--4"></div>
-        <div class="flower__line__leaf flower__line__leaf--5"></div>
-        <div class="flower__line__leaf flower__line__leaf--6"></div>
-      </div>
+  <!-- Pohon Natal -->
+  <div class="christmas-tree">
+    <div class="tree-star"></div>
+    <div class="tree-section tree-section--1">
+      <div class="ornament ornament--red"></div>
+      <div class="ornament ornament--gold"></div>
     </div>
-
-    <div class="flower flower--2">
-      <div class="flower__leafs flower__leafs--2">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
-
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
-
-      </div>
-      <div class="flower__line">
-        <div class="flower__line__leaf flower__line__leaf--1"></div>
-        <div class="flower__line__leaf flower__line__leaf--2"></div>
-        <div class="flower__line__leaf flower__line__leaf--3"></div>
-        <div class="flower__line__leaf flower__line__leaf--4"></div>
-      </div>
+    <div class="tree-section tree-section--2">
+      <div class="ornament ornament--blue"></div>
+      <div class="ornament ornament--green"></div>
+      <div class="ornament ornament--pink"></div>
     </div>
-
-    <div class="flower flower--3">
-      <div class="flower__leafs flower__leafs--3">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
-
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
-
-      </div>
-      <div class="flower__line">
-        <div class="flower__line__leaf flower__line__leaf--1"></div>
-        <div class="flower__line__leaf flower__line__leaf--2"></div>
-        <div class="flower__line__leaf flower__line__leaf--3"></div>
-        <div class="flower__line__leaf flower__line__leaf--4"></div>
-      </div>
+    <div class="tree-section tree-section--3">
+      <div class="ornament ornament--purple"></div>
+      <div class="ornament ornament--yellow"></div>
+      <div class="ornament ornament--orange"></div>
     </div>
-
-    <div class="grow-ans" style="--d:1.2s">
-      <div class="flower__g-long">
-        <div class="flower__g-long__top"></div>
-        <div class="flower__g-long__bottom"></div>
-      </div>
+    <div class="tree-lights">
+      <div class="light light--1"></div>
+      <div class="light light--2"></div>
+      <div class="light light--3"></div>
+      <div class="light light--4"></div>
+      <div class="light light--5"></div>
+      <div class="light light--6"></div>
+      <div class="light light--7"></div>
+      <div class="light light--8"></div>
     </div>
+    <div class="tree-trunk"></div>
+  </div>
 
-    <div class="growing-grass">
-      <div class="flower__grass flower__grass--1">
-        <div class="flower__grass--top"></div>
-        <div class="flower__grass--bottom"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--1"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--2"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--3"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--4"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--5"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--6"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--7"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--8"></div>
-        <div class="flower__grass__overlay"></div>
-      </div>
+  <!-- Hadiah -->
+  <div class="gifts">
+    <div class="gift gift--1">
+      <div class="gift__box"></div>
+      <div class="gift__ribbon-v"></div>
+      <div class="gift__ribbon-h"></div>
+      <div class="gift__bow">🎀</div>
     </div>
-
-    <div class="growing-grass">
-      <div class="flower__grass flower__grass--2">
-        <div class="flower__grass--top"></div>
-        <div class="flower__grass--bottom"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--1"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--2"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--3"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--4"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--5"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--6"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--7"></div>
-        <div class="flower__grass__leaf flower__grass__leaf--8"></div>
-        <div class="flower__grass__overlay"></div>
-      </div>
+    <div class="gift gift--2">
+      <div class="gift__box"></div>
+      <div class="gift__ribbon-v"></div>
+      <div class="gift__ribbon-h"></div>
+      <div class="gift__bow">🎀</div>
     </div>
-
-    <div class="grow-ans" style="--d:2.4s">
-      <div class="flower__g-right flower__g-right--1">
-        <div class="leaf"></div>
-      </div>
-    </div>
-
-    <div class="grow-ans" style="--d:2.8s">
-      <div class="flower__g-right flower__g-right--2">
-        <div class="leaf"></div>
-      </div>
-    </div>
-
-    <div class="grow-ans" style="--d:2.8s">
-      <div class="flower__g-front">
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--1">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--2">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--3">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--4">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--5">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--6">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--7">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--8">
-          <div class="flower__g-front__leaf"></div>
-        </div>
-        <div class="flower__g-front__line"></div>
-      </div>
-    </div>
-
-    <div class="grow-ans" style="--d:3.2s">
-      <div class="flower__g-fr">
-        <div class="leaf"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--1"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--2"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--3"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--4"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--5"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--6"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--7"></div>
-        <div class="flower__g-fr__leaf flower__g-fr__leaf--8"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--0">
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:2.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.4s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--1">
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.8s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--2">
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.4s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--3">
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--4">
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--5">
-      <div class="grow-ans" style="--d:4s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--6">
-      <div class="grow-ans" style="--d:4.2s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.4s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.6s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:4.8s">
-        <div class="leaf leaf--3"></div>
-      </div>
-    </div>
-
-    <div class="long-g long-g--7">
-      <div class="grow-ans" style="--d:3s">
-        <div class="leaf leaf--0"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.2s">
-        <div class="leaf leaf--1"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.5s">
-        <div class="leaf leaf--2"></div>
-      </div>
-      <div class="grow-ans" style="--d:3.6s">
-        <div class="leaf leaf--3"></div>
-      </div>
+    <div class="gift gift--3">
+      <div class="gift__box"></div>
+      <div class="gift__ribbon-v"></div>
+      <div class="gift__ribbon-h"></div>
+      <div class="gift__bow">🎀</div>
     </div>
   </div>
 
-  <!-- Title -->
-  <h1 class="title"><span id="title"></span></h1>
+  <!-- Ornamen Terbang -->
+  <div class="floating-ornament floating-ornament--1"></div>
+  <div class="floating-ornament floating-ornament--2"></div>
+  <div class="floating-ornament floating-ornament--3"></div>
+
+  <h1 class="title">🎄 Mayy 🎄</h1>
+  <div class="subtitle">MERRY CHRISTMAS</div>
+
+  <!-- Audio Background -->
+  <audio id="bgMusic" loop>
+  <source src="musik/musik.mp3" type="audio/mpeg">
+</audio>
+
+  <script>
+    const bgMusic = document.getElementById('bgMusic');
+
+    // Auto-play saat halaman dimuat
+    window.addEventListener('load', () => {
+      bgMusic.play().catch(err => {
+        console.log('Auto-play dicegah oleh browser:', err);
+      });
+    });
+
+    // Auto-play saat user interact pertama kali jika belum playing
+    document.addEventListener('click', function firstClick() {
+      bgMusic.play().catch(err => console.log(err));
+      document.removeEventListener('click', firstClick);
+    }, { once: true });
+
+    // Membuat bintang-bintang
+    function createStars() {
+      const starsContainer = document.querySelector('.stars');
+      const isMobile = window.innerWidth <= 768;
+      const starCount = isMobile ? 100 : 200;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Membuat efek salju
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.innerHTML = '❄';
+      snowflake.style.left = Math.random() * 100 + '%';
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+      snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+      snowflake.style.fontSize = Math.random() * 15 + 10 + 'px';
+      
+      document.body.appendChild(snowflake);
+      
+      setTimeout(() => {
+        snowflake.remove();
+      }, 5000);
+    }
+
+    // Inisialisasi
+    createStars();
+    
+    const isMobile = window.innerWidth <= 768;
+    const snowInterval = isMobile ? 300 : 150;
+    setInterval(createSnowflake, snowInterval);
+  </script>
 </body>
-
 </html>
-
-<!-- Import Javascript -->
-<script src="js/main.js"></script>
